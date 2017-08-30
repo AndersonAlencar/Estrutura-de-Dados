@@ -1,120 +1,108 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-                         ////////////// EXERCICIO 5
+                              ////////////////EXERCICIO 4
 
-void OrdenaVetor(int tam, int matriz[])
+int Eprimo(int x)// verifica se é primo
 {
-    int i, j,aux;
-
-    for(i=0;i<tam-1;i++)
+    int i;
+    if(x == 2)
     {
-        for(j=i+1;j<tam;j++)
+        return 1;
+    }
+    for(i=2;i<(x/2)+2;i++)
+    {
+        if(x%i == 0)
         {
-            if(matriz[i]>matriz[j])
-            {
-                aux = matriz[i];
-                matriz[i] = matriz[j];
-                matriz[j] = aux;
-            }
+            return 0;
         }
     }
+    return 1;
 }
 
-int buscaBinaria(int tam, int vetor[], int valor)
+int mostraPrimo(int x)
 {
-    int i, menor = 0, meio = tam/ 2, maior = tam -1;
-    while(maior >= menor)
+    int y, contador = 0, primo1 = 0,primo2 = 0;
+    if(x == 2)
     {
-        if(valor == vetor[meio])
-        {
-            return 1;
-            break;
-        }
-        else if(valor > vetor[meio])
-        {
-            menor = meio -1 ;
-        }
-        else
-        {
-            maior = meio - 1;
-        }
-        meio = (maior+menor)/2;
+        printf("3 e 5 s%co os primos posteriores\nN%co existem primos anteriores\n",198,198);
+        return 0 ;
     }
+    if(x == 3)
+    {
+        printf("5 e 7 s%co os primos posteriores\nApenas 2 %c primo anterior\n",198,130);
+        return 0;
+    }
+    if(x == 5)
+    {
+        printf("7 e 11 s%co os primos posteriores\n2 e 3 s%co primos anteriores\n",198,198);
+        return 0;
+    }//// o algorítmo para encontrar primos anteriores não funicona para 2, 3 e 5
+    y = x + 2;
+    while(contador != 2)
+    {
+        if(Eprimo(y) && primo1 == 0)
+        {
+            primo1 = y;
+            contador += 1;
+            y += 2;
+        }
+        else if(Eprimo(y))
+        {
+            primo2 = y;
+            contador += 1;
+        }
+
+        y+= 2;
+    }
+    printf("\n%d e %d s%co os primos posteriores",primo1,primo2,198);
+    ///////////////////////////////////////////////////////////////////////// acima posteriores, abaixo anteriores
+     y = x - 2;
+     primo1 = 0;
+     primo2 = 0;
+     contador = 0;
+     while(contador != 2)
+     {
+         if(Eprimo(y) && primo1 == 0)
+         {
+             primo1 = y;
+             contador += 1;
+             y -= 2;
+         }
+         else if(Eprimo(y))
+        {
+            primo2 = y;
+            contador += 1;
+        }
+        y-= 2;
+     }
+
+    printf("\n%d e %d s%co os primos anteriores",primo2,primo1,198);
+
     return 0;
 }
-int removeVetor(int tam,int vetor[])
-{
-    int aux;
-    int verificador = 0;
-    int contador = 0 ;
-    int i,j,k;
-    for(i=0;i<tam-1;i++)//só precisa ir até tam-1 porque j vai até tam
-    {
-        for(j=i+1;j<tam;j++)
-        {
-            if(vetor[i] == vetor[j])
-            {
-                verificador++;
-                contador++;
-            }
-        }// bloco verificador de repetições
-        if(verificador != 0)
-        {
-            while(verificador != 0)
-            {
-                for(j=i+1;j<tam;j++)////....verifica qual é repetido
-                {
-                    if(vetor[j] == vetor[i])
-                    {
-                        for(k=j+1;k<tam;k++)
-                        {
-                            vetor[k-1] = vetor[k];
-                        }//aqui ele deleta e reordena os elementos
-                        tam--; // tamanho perde uma unidade
-                        verificador--;
-                    }
-                }
-            }
-        }//bloco deletar repetições
-        verificador = 0;
-
-    }
-    return contador;
 
 
-}
+
 int main()
 {
-    int i, elemremovidos,num;
-    int vetor[10] = {8,3,3,4,2,1,6,10,5,7};// adicionando um 3 no lugar do 9
-    OrdenaVetor(10,vetor);// ordenando o vetor para facilitar
-    elemremovidos = removeVetor(10,vetor);
-    if(elemremovidos == 0)
-    {
-        printf("Nenhum elemento repetido %d\n",elemremovidos);
-    }// retorna ok se nada for alterado
-    else if(elemremovidos > 0)
-    {
-        printf("%d elemto foi removido",elemremovidos);
-    }// retorna o número de repetições
+    int  d, contador = 0;
 
-    printf("\nDigite o numero desejado: ");
-    scanf("%d",&num);
-    while(1)
+    while(contador == 0)
     {
-        if(buscaBinaria(10-elemremovidos,vetor,num))
+        printf("Digite um n%cmero primo: ",163);
+        fflush(stdin);
+        scanf("%d",&d);
+        if(Eprimo(d))
         {
-            printf("O elemento pertence ao vetor");
-            break;
+            mostraPrimo(d);
+            contador +=1;
         }
         else
         {
-            printf("O elemento nao pertence ao vetor");
+            printf("O n%cmero n%co %c primo\n",163, 198, 130);
         }
+
     }
-
-
-
     return 0;
 }
